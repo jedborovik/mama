@@ -1,0 +1,23 @@
+{
+  "name": "mama",
+  "version": "0.0.1",
+  "description": "Mama checks up on you to make sure you're alright",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jedborovik/mama.git"
+  },
+  "keywords": [
+    "heartbeat",
+    "monitor"
+  ],
+  "author": "Jed Borovik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jedborovik/mama/issues"
+  },
+  "homepage": "https://github.com/jedborovik/mama"
+}
