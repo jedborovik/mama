@@ -11,20 +11,46 @@ function Mama(ms, good, bad) {
   this.checkInPeriod = ms;
   this.good = good;
   this.bad = bad;
-  this.missedCheckIns = 0;
-  this.timeout = undefined;
+  this._consecutiveMisses = 0;
+  this._consecutiveHits = 0;
+  this._timeout = undefined;
 }
 
 Mama.prototype.checkIn = function() {
-  this.good();
-  clearTimeout(this.timeout);
-  this.timeout = setTimeout(this.bad, this.checkInPeriod);
+  this._consecutiveMisses = 0;
+  ++this._consecutiveHits;
+  this.good(this._consecutiveHits);
+  this._resetTimeout();
 }
 
-function defaultGood() {
-  console.log('Thanks for checking in!');
+Mama.prototype._bad = function() {
+  this._consecutiveHits = 0;
+  ++this._consecutiveMisses;
+  this.bad(this._consecutiveMisses);
+  this._resetTimeout();
 }
 
-function defaultBad() {
-  console.log('Oh no! You missed checked in.');
+Mama.prototype._resetTimeout = function() {
+  clearTimeout(this._timeout);
+  this._timeout = setTimeout(this._bad.bind(this), this.checkInPeriod);
+}
+
+Mama.prototype.stop = function() {
+  throw Error('Implement me!');
+}
+
+Mama.prototype.pause = function() {
+  throw Error('Implement me!');
+}
+
+function defaultGood(n) {
+  console.log('Thanks for checking in! You\'ve checked in %d %s in a row.', n, pluralize('time', n));
+}
+
+function defaultBad(n) {
+  console.log('Oh no! You\'ve missed %d %s in a row.', n, pluralize('checkin', n));
+}
+
+function pluralize(word, n) {
+  return n === 1 ? word : word + 's';
 }
